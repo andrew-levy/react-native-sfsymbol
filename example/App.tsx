@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { Animated, Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import { SFSymbol } from "react-native-sfsymbol";
-import { Image } from "expo-image";
-
-const AnimatedSFSymbol = Animated.createAnimatedComponent(SFSymbol);
 
 export default function App() {
   const [volume, setVolume] = useState(0);
@@ -13,15 +10,15 @@ export default function App() {
       <SFSymbol
         name="person.3"
         renderingMode="palette"
-        colors={["blue", "green", "red"]}
+        color={["blue", "green", "red"]}
         scale="large"
         weight="regular"
         size={100}
       />
       <SFSymbol
-        name="speaker.3"
+        name="speaker.wave.3"
         renderingMode="palette"
-        colors={["green", "blue", "red"]}
+        color={["green", "blue", "red"]}
         scale="large"
         variableValue={0.1}
         size={100}
@@ -37,7 +34,7 @@ export default function App() {
         name="phone.arrow.up.right"
         renderingMode="palette"
         scale="small"
-        colors={["blue", "green"]}
+        color={["blue", "green"]}
         variableValue={0.1}
         size={100}
         style={{
@@ -48,20 +45,17 @@ export default function App() {
           height: 200,
         }}
       />
-      <AnimatedSFSymbol
+      <SFSymbol
         weight="light"
-        name="speaker.2"
+        name="speaker.wave.3"
         renderingMode="palette"
-        colors={["green", "red", "red"]}
+        color={["green", "red", "red"]}
         scale="large"
         variableValue={volume}
         size={100}
       />
       <Button title="Volume up" onPress={() => setVolume(volume + 0.1)} />
-      {/* <Image
-        source={{ uri: "https://picsum.photos/200/300" }}
-        style={{ width: 200, height: 200 }}
-      /> */}
+      <Button title="Volume down" onPress={() => setVolume(volume - 0.1)} />
     </View>
   );
 }

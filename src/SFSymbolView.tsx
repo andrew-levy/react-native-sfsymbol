@@ -4,16 +4,21 @@ import { processColor, ProcessedColorValue } from "react-native";
 
 import { SFSymbolViewProps } from "./SFSymbol.types";
 
-const NativeView: React.ComponentType<
-  Omit<SFSymbolViewProps, "colors"> & {
-    colors: (ProcessedColorValue | null | undefined)[] | undefined;
-  }
-> = requireNativeViewManager("SFSymbol");
+type NativeSFSymbolViewProps = Omit<SFSymbolViewProps, "colors"> & {
+  colors: (ProcessedColorValue | null | undefined)[] | undefined;
+};
+
+const NativeView: React.ComponentType<NativeSFSymbolViewProps> =
+  requireNativeViewManager("SFSymbol");
 
 export class SFSymbol extends React.PureComponent<SFSymbolViewProps> {
   render() {
-    // console.log("Name: ", this.props.name);
-    const { colors, style, ...restProps } = this.props;
+    const { color, style, ...restProps } = this.props;
+    const colors =
+      typeof color === "string"
+        ? [processColor(color)]
+        : color?.map(processColor);
+
     return (
       <NativeView
         key={JSON.stringify(this.props)}
@@ -23,7 +28,7 @@ export class SFSymbol extends React.PureComponent<SFSymbolViewProps> {
           width: restProps.size || 18,
           height: restProps.size || 18,
         }}
-        colors={colors?.map(processColor)}
+        colors={colors}
       />
     );
   }

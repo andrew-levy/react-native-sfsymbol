@@ -8,7 +8,7 @@ public class SFSymbolModule: Module {
 
     View(SFSymbolView.self) {
         Prop("name") { (view: SFSymbolView, name: String?) in
-            view.name = name ?? ""
+            view.name = name ?? "questionmark"
         }
         
         Prop("weight") { (view:SFSymbolView, weight: SFSymbolWeight?) in
