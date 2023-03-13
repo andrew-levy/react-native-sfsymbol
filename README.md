@@ -6,7 +6,7 @@
 
 ## Highlights
 
-- :smiley: Built with [Expo's Module API](https://docs.expo.dev/modules/module-api/)
+- :fire: Built with [Expo's Module API](https://docs.expo.dev/modules/module-api/)
 - :art: Support for all [rendering modes](https://developer.apple.com/design/human-interface-guidelines/foundations/sf-symbols#rendering-modes)
 - :loud_sound: Support for [variable color values](https://developer.apple.com/design/human-interface-guidelines/foundations/sf-symbols#variable-color)
 - :apple: iOS only ([see why](https://developer.apple.com/design/human-interface-guidelines/foundations/sf-symbols#custom-symbols))
@@ -21,7 +21,7 @@ yarn add react-native-sfsymbol
 
 Then run
 
-```
+```console
 npx pod-install
 ```
 
@@ -30,9 +30,12 @@ npx pod-install
 ## Usage
 
 ```tsx
+import { useState } from "react";
+import { View, Button } from "react-native";
 import { SFSymbol } from "react-native-sfsymbol";
 
 export default function App() {
+  const [volume, setVolume] = useState(0);
   return (
     <View style={styles.container}>
       {/* Monochrome rendering mode (one color) */}
@@ -47,10 +50,11 @@ export default function App() {
       <SFSymbol
         name="speaker.wave.3"
         renderingMode="hierarchical"
-        scale="small"
-        variableValue={0.1}
+        scale="medium"
+        variableValue={volume}
         size={100}
       />
+      <Button title="Volume Up" onPress={() => setVolume(volume + 0.1)} />
       {/* Palette rendering mode (multiple custom colors) */}
       <SFSymbol
         name="person.2"
@@ -69,16 +73,88 @@ export default function App() {
 }
 ```
 
-## API
+## `<SFSymbol />`
 
-### `<SFSymbol />`
+The `SFSymbol` component uses UIKit's `UIImage` view to render SF Symbols.
 
-| Prop            | Type                                                                                                     | Description                       | Required                 | Default        |
-| --------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------ | -------------- | ----------- |
-| `name`          | [`SystemName`](https://github.com/andrew-levy/react-native-sfsymbol/blob/main/src/SFSymbol.types.ts#L23) | The name of the symbol.           | Yes                      | `questionmark` |
-| `color`         | `string                                                                                                  | string[]`                         | The color of the symbol. | No             | `#007AFFFF` |
-| `weight`        | `string`                                                                                                 | The weight of the symbol.         | No                       | `regular`      |
-| `scale`         | `number`                                                                                                 | The scale of the symbol.          | No                       | `medium`       |
-| `renderingMode` | `string`                                                                                                 | The rendering mode of the symbol. | No                       | `monochrome`   |
-| `variableValue` | `number`                                                                                                 | The variable value of the symbol. | No                       | `1.0`          |
-| `style`         | `object`                                                                                                 | The style of the symbol.          | No                       | `undefined`    |
+### `Props`
+
+#### `name`
+
+The name of the symbol.
+
+> required: yes
+>
+> type: [`SystemName`](https://github.com/andrew-levy/react-native-sfsymbol/blob/main/src/SFSymbol.types.ts#L23)
+>
+> default: `""`
+
+#### `color`
+
+The color of the symbol. This can be a single color or an array of colors depending on the rendering mode.
+
+> required: no
+>
+> type: `string` or `string[]`
+>
+> default: `"#007AFFFF"`
+
+#### `weight`
+
+The weight of the symbol.
+
+> required: no
+>
+> type: `"thin" | "ultraLight" | "light" | "regular" | "medium" | "semibold" | "bold" | "heavy" | "black"`
+>
+> default: `"regular"`
+
+#### `scale`
+
+The scale of the symbol.
+
+> required: no
+>
+> type: `"small" | "medium" | "large"`
+>
+> default: `"small"`
+
+#### `renderingMode`
+
+The rendering mode of the symbol.
+
+> required: no
+>
+> type: `"monochrome" | "hierarchical" | "palette" | "multicolor"`
+>
+> default: `"monochrome"`
+
+#### `size`
+
+The size of the symbol. This deifines the frame of the image view.
+
+> required: no
+>
+> type: `number`
+>
+> default: `42`
+
+#### `variableValue`
+
+The variable value of the symbol.
+
+> required: no
+>
+> type: `number`
+>
+> default: `1.0`
+
+#### `style`
+
+The style of the symbol.
+
+> required: no
+>
+> type: `StyleProp<ViewStyle>`
+>
+> default: `undefined`

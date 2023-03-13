@@ -25,27 +25,34 @@ class SFSymbolView: ExpoView {
     }
 
     private func renderSFSymbol() {
-        var config = UIImage.SymbolConfiguration(weight: weight?.toSFSymbolWeight() ?? .regular)
-        config = config.applying(UIImage.SymbolConfiguration(scale: scale?.toSFSymbolScale() ?? .medium))
+        let symbolName = name ?? ""
+        let symbolWeight = weight?.toSFSymbolWeight() ?? .regular
+        let symbolSize = size ?? 42
+        let symbolScale = scale?.toSFSymbolScale() ?? .small
+        let symbolColor = colors?[0] ?? .systemBlue
+        let symbolColors = colors ?? [.systemBlue, .systemBlue]
+        let symbolVariableValue = variableValue ?? 1.0
+        
+        var config = UIImage.SymbolConfiguration(pointSize: symbolSize, weight: symbolWeight, scale: symbolScale)
 
         if renderingMode == .hierarchical, #available(iOS 15.0, *) {
-            config = config.applying(UIImage.SymbolConfiguration(hierarchicalColor: colors?[0] ?? .systemBlue))
+            config = config.applying(UIImage.SymbolConfiguration(hierarchicalColor: symbolColor))
         } else if renderingMode == .palette, #available(iOS 15.0, *) {
-            config = config.applying(UIImage.SymbolConfiguration(paletteColors: colors ?? [.systemBlue, .systemBlue]))
+            config = config.applying(UIImage.SymbolConfiguration(paletteColors: symbolColors))
         } else if renderingMode == .multicolor, #available(iOS 16.0, *) {
             config = config.applying(UIImage.SymbolConfiguration.preferringMulticolor())
         } else if renderingMode == .monochrome {
-            imageView.tintColor = colors?[0] ?? .systemBlue
-        }
-        
-        var sfSymbolImage = UIImage(systemName: name ?? "", withConfiguration: config)
-        
-        if #available(iOS 16.0, *) {
-            sfSymbolImage = UIImage(systemName: name ?? "", variableValue: variableValue ?? 1.0, configuration: config)
+            imageView.tintColor = symbolColor
         }
 
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: size ?? 42.0, height: size ?? 42.0)
+        var sfSymbolImage = UIImage(systemName: symbolName, withConfiguration: config)
+
+        if #available(iOS 16.0, *) {
+            sfSymbolImage = UIImage(systemName: symbolName, variableValue: symbolVariableValue, configuration: config)
+        }
+        
+        imageView.frame = CGRect(x: 0, y: 0, width: symbolSize, height: symbolSize)
+        imageView.contentMode = .center
         imageView.image = sfSymbolImage
     }
   

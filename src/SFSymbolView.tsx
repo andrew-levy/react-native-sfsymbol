@@ -25,8 +25,8 @@ export class SFSymbol extends React.PureComponent<SFSymbolViewProps> {
         {...restProps}
         style={{
           ...style,
-          width: restProps.size || 18,
-          height: restProps.size || 18,
+          width: restProps.size ?? 42,
+          height: restProps.size ?? 42,
         }}
         colors={colors}
       />

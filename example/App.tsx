@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { SFSymbol } from "react-native-sfsymbol";
 
 export default function App() {
@@ -13,22 +13,34 @@ export default function App() {
         color={["blue", "green", "red"]}
         scale="large"
         weight="regular"
-        size={100}
+        size={50}
       />
       <SFSymbol
-        name="speaker.wave.3"
+        name="person.3"
         renderingMode="palette"
-        color={["green", "blue", "red"]}
-        scale="large"
-        variableValue={0.1}
-        size={100}
+        color={["blue", "green", "red"]}
+        scale="medium"
+        weight="regular"
+        size={50}
+      />
+      <SFSymbol
+        name="person.3"
+        renderingMode="palette"
+        color={["blue", "green", "red"]}
+        scale="small"
+        weight="regular"
+        size={50}
       />
       <SFSymbol
         name="sun.max.fill"
         renderingMode="multicolor"
-        scale="large"
         variableValue={0.1}
-        size={100}
+        size={50}
+        style={{
+          margin: 10,
+          backgroundColor: "lightgrey",
+          borderWidth: 1,
+        }}
       />
       <SFSymbol
         name="phone.arrow.up.right"
@@ -36,26 +48,40 @@ export default function App() {
         scale="small"
         color={["blue", "green"]}
         variableValue={0.1}
-        size={100}
+        size={50}
         style={{
+          margin: 10,
           backgroundColor: "lightgrey",
-          justifyContent: "center",
-          alignItems: "center",
-          width: 200,
-          height: 200,
+          borderWidth: 1,
         }}
       />
       <SFSymbol
-        weight="light"
         name="speaker.wave.3"
         renderingMode="palette"
         color={["green", "red", "red"]}
-        scale="large"
+        scale="small"
         variableValue={volume}
-        size={100}
+        size={200}
+        style={{
+          margin: 10,
+          backgroundColor: "lightgrey",
+          borderWidth: 1,
+        }}
       />
       <Button title="Volume up" onPress={() => setVolume(volume + 0.1)} />
       <Button title="Volume down" onPress={() => setVolume(volume - 0.1)} />
+      <View
+        style={{ flexDirection: "row", alignItems: "center", columnGap: 10 }}
+      >
+        <SFSymbol
+          name="speaker.wave.3"
+          renderingMode="palette"
+          color={["green", "red", "red"]}
+          variableValue={volume}
+          size={50}
+        />
+        <Text style={{ fontSize: 50 }}>{volume.toFixed(2)}</Text>
+      </View>
     </View>
   );
 }
